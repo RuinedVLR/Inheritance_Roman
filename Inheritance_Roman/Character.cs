@@ -10,12 +10,18 @@ namespace Inheritance_Roman
     {
         public int Health { get; set; }
         public string Name { get; set; }
-        public int AttackPower { get; set; }
+        public int AttackPowerMin { get; set; }
+        public int AttackPowerMax { get; set; }
+        public int Speed { get; set; }
+
+        public int turnsToAct = 0;
+
+        static Random _rand = new Random();
 
         public virtual void Attack(Character targetChar)
         {
-            Console.WriteLine($"Target Character: {targetChar}");
-            targetChar.TakeDamage(AttackPower);
+            targetChar.TakeDamage(_rand.Next(AttackPowerMin, AttackPowerMax));
+            turnsToAct = 0;
         }
 
         public virtual void TakeDamage(int damage)
@@ -25,6 +31,15 @@ namespace Inheritance_Roman
             {
                 Health = 0;
             }
+        }
+
+        public Character(int health, string name, int attackPowerMin, int attackPowerMax, int speed)
+        {
+            Health = health;
+            Name = name;
+            AttackPowerMin = attackPowerMin;
+            AttackPowerMax = attackPowerMax;
+            Speed = speed;
         }
     }
 }
